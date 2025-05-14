@@ -1,0 +1,11 @@
+{% extends 'hello_azure/base.html' %}
+
+{% block content %}
+<div class="content-container">
+    <div class="d-grid gap-2">
+        <a href="{% url 'stock_value_report' %}" class="btn btn-primary btn-lg">
+            <i class="fas fa-chart-line"></i>库存价值
+        </a>
+    </div>
+</div>
+{% endblock content %}

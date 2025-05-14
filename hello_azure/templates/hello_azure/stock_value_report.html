@@ -1,0 +1,94 @@
+{% extends 'hello_azure/base.html' %}
+{% block content %}
+
+<div class="content-container">
+    {% if error %}
+    <div class="alert alert-danger">
+        <div class="alert-icon">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <div class="alert-content">
+            <h4 class="alert-heading">错误提示</h4>
+            <p class="alert-message">{{ error }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="upload-form">
+        {% csrf_token %}
+
+        <div class="form-header">
+            <h2>库存价值</h2>
+        </div>
+
+        <div class="file-upload-section">
+            <div class="file-input-group">
+                <div class="file-label">
+                    <div class="drop-zone" id="dropZone1">
+                        <div class="drop-zone-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>博讯 - 销售 - 详细查询 - 产品批量操作 - 产品导出</p>
+                            <input type="file" name="myfile1" class="file-input" accept=".csv" id="fileInput1">
+                        </div>
+                        <div class="file-preview" id="filePreview1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="file-input-group">
+                <div class="file-label">
+                    <div class="drop-zone" id="dropZone2">
+                        <div class="drop-zone-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>博讯 - 销售 - 详细查询 - 库存</p>
+                            <div class="alert alert-info">
+                                <h4 class="alert-heading">注意事项</h4>
+                                <ol class="mb-0">
+                                    <li>开始时间: 2023-01-01</li>
+                                    <li>文档类型: EXCEL</li>
+                                    <li>请勾选: 平均成本/销售价/采购价</li>
+                                </ol>
+                            </div>
+                            <input type="file" name="myfile2" class="file-input" accept=".xlsx,.xls" id="fileInput2">
+                        </div>
+                        <div class="file-preview" id="filePreview2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-upload"></i> 生成报告
+            </button>
+        </div>
+    </form>
+
+    {% if data %}
+    <div class="results-section">
+        <div class="result-card">
+            <div class="result-header">
+                <i class="fas fa-chart-line"></i>
+                <h3>库存价值报告</h3>
+            </div>
+            <div class="result-content">
+                <div class="result-item">
+                    <span class="result-label">库存税前总价值:</span>
+                    <span class="result-value">{{ data.stock_value_without_iva }}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">库存税后总价值:</span>
+                    <span class="result-value">{{ data.stock_value }}</span>
+                </div>
+            </div>
+            <div class="result-actions">
+                <a href="{% url 'download_file' %}?source=StockValue.txt" class="btn btn-success">
+                    <i class="fas fa-download"></i> 下载报告
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

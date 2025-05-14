@@ -1,2 +1,10 @@
 Django
 whitenoise
+pandas
+openpyxl
+gunicorn
+django-crispy-forms
+crispy-bootstrap5
+numpy
+lxml
+django-chartjs
