@@ -102,11 +102,15 @@
                 <div class="result-item">
                     <span class="result-label">税率数量:</span>
                     <table class="result-table">
-                        <tbody text-align: right>
+                        <tbody>
                             {% for rate, count in data.sale_tax_rate_counts.items %}
                             <tr>
                               <td>{{ rate }}% : </td>
-                              <td style="text-align: right;">
+                              <td 
+                              {% if rate == 0.0 and count > 100 %} class="high-warning"
+          {% else %} class="number-cell"
+          {% endif %}
+                              >
                                 {{ count }}
                               </td>
                             </tr>

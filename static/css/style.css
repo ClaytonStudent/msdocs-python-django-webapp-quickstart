@@ -314,3 +314,14 @@ body {
 .result-actions .btn i {
     margin-right: 8px;
 }
+
+.high-warning {
+    background-color: #ffcccc;  /* light red */
+    font-weight: bold;
+    color: #a00;
+    text-align: right;
+  }
+
+.number-cell {
+    text-align: right;  /* default right alignment for numbers */
+  }
