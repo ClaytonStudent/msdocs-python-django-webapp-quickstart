@@ -88,6 +88,35 @@
             </div>
         </div>
     </div>
+    <div class="results-section">
+        <div class="result-card">
+            <div class="result-header">
+                <i class="fas fa-chart-line"></i>
+                <h3>产品报告</h3>
+            </div>
+            <div class="result-content">
+                <div class="result-item">
+                    <span class="result-label">产品总数:</span>
+                    <span class="result-value">{{ data.product_number }}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">税率数量:</span>
+                    <table class="result-table">
+                        <tbody text-align: right>
+                            {% for rate, count in data.sale_tax_rate_counts.items %}
+                            <tr>
+                              <td>{{ rate }}% : </td>
+                              <td style="text-align: right;">
+                                {{ count }}
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                    </table>
+                  </div>
+            </div>
+        </div>
+    </div>
     {% endif %}
 </div>
 
