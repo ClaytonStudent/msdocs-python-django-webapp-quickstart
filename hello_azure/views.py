@@ -107,12 +107,13 @@ def analysis_stock_value_report(filename1,filename2):
     df_product = get_product(file1)
     df_stock = pd.read_html(file2)[0]
     df_stock = get_stock(df_stock)
-    merged_df = get_merged_df(df_stock,df_product)
+    merged_df,tax_counts = get_merged_df(df_stock,df_product)
     stock_value,stock_value_without_iva = get_stock_value(merged_df)
     data = {
         "date": filename2.split('_')[2],
         "stock_value": stock_value,
         "stock_value_without_iva": stock_value_without_iva,
+        "sale_tax_rate_counts": tax_counts
     }
     # Specify the path to the text file
     file_name = "StockValue.txt"  # Replace with your desired file path
@@ -151,9 +152,10 @@ def get_stock(df):
     return df
 def get_merged_df(df_stock,df_product):
     merged_df = df_stock.merge(df_product, on='product_model', how='left')
+    tax_counts = merged_df['sale_tax_rate'].value_counts(dropna=False).to_dict()
     merged_df['sale_tax_rate'].fillna(0, inplace=True)
     merged_df['sale_tax_rate'] = (merged_df['sale_tax_rate'] + 100) / 100
-    return merged_df
+    return merged_df,tax_counts
 def get_stock_value(merged_df):
     avg_stock = sum(merged_df[merged_df['成本小计']>0]['成本小计'] * merged_df[merged_df['成本小计']>0]['sale_tax_rate'])
     remain_stock = sum(merged_df[merged_df['成本小计']<=0]['小计'] * merged_df[merged_df['成本小计']<=0]['sale_tax_rate'])
